@@ -2,90 +2,155 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>For My Love 💖</title>
+  <title>For You ❤️</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    * { box-sizing: border-box; }
+
     body {
       margin: 0;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background: radial-gradient(circle at top, #1a001f, #000);
+      background: radial-gradient(circle at top, #2a0033, #05000a 60%);
       color: #fff;
-      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
-      text-align: center;
+      font-family: system-ui, -apple-system, sans-serif;
       overflow: hidden;
     }
 
     .card {
+      position: relative;
       background: rgba(255, 255, 255, 0.08);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      padding: 40px 30px;
-      max-width: 500px;
-      box-shadow: 0 0 40px rgba(255, 0, 150, 0.3);
-      animation: float 4s ease-in-out infinite;
+      padding: 36px 28px 44px;
+      max-width: 520px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 40px rgba(255, 60, 125, 0.35);
+      animation: float 5s ease-in-out infinite;
     }
 
     h1 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-      color: #ff5fa2;
-    }
-
-    .fancy {
-      font-size: 1.2rem;
-      line-height: 1.7;
-      margin: 10px 0;
-    }
-
-    .heart {
+      margin: 0 0 12px;
       font-size: 2rem;
-      animation: pulse 1.5s infinite;
-      margin: 15px 0;
+      color: #ff6aa8;
+      text-shadow: 0 0 12px rgba(255, 106, 168, 0.7);
     }
 
-    button {
-      margin-top: 20px;
-      padding: 12px 22px;
+    .message {
+      min-height: 3.5em;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+      margin: 14px 0 20px;
+    }
+
+    .message.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    .btn {
       border: none;
-      border-radius: 30px;
+      border-radius: 999px;
+      padding: 12px 22px;
       font-size: 1rem;
-      background: linear-gradient(45deg, #ff3c7d, #ff85b2);
-      color: #fff;
       cursor: pointer;
-      box-shadow: 0 0 20px rgba(255, 60, 125, 0.6);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      color: #fff;
+      background: linear-gradient(45deg, #ff3c7d, #ff85b2);
+      box-shadow: 0 0 22px rgba(255, 60, 125, 0.7);
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
 
-    button:hover {
+    .btn:hover {
       transform: scale(1.05);
       box-shadow: 0 0 30px rgba(255, 60, 125, 0.9);
     }
 
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
+    .hearts span {
+      position: absolute;
+      bottom: -20px;
+      font-size: 18px;
+      animation: floatUp linear infinite;
+      opacity: 0.8;
+      filter: drop-shadow(0 0 6px rgba(255, 80, 160, 0.6));
+      pointer-events: none;
     }
 
     @keyframes float {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes floatUp {
+      from {
+        transform: translateY(0) translateX(0) scale(0.8);
+        opacity: 0.9;
+      }
+      to {
+        transform: translateY(-120vh) translateX(40px) scale(1.2);
+        opacity: 0;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Happy Valentine’s Day 💘</h1>
-    <div class="heart">❤️ 💕 💖</div>
-    <p class="fancy">𝒀𝒐𝒖 𝒂𝒓𝒆 𝒎𝒚 𝒇𝒂𝒗𝒐𝒓𝒊𝒕𝒆 𝒉𝒆𝒍𝒍𝒐 𝒂𝒏𝒅 𝒉𝒂𝒓𝒅𝒆𝒔𝒕 𝒈𝒐𝒐𝒅𝒃𝒚𝒆 💌</p>
-    <p class="fancy">𝑴𝒚 𝒉𝒆𝒂𝒓𝒕 𝒔𝒎𝒊𝒍𝒆𝒔 𝒘𝒉𝒆𝒏 𝒚𝒐𝒖’𝒓𝒆 𝒂𝒓𝒐𝒖𝒏𝒅 🥰</p>
-    <p class="fancy">You’re my today, my tomorrow, and my always ♾️</p>
+  <div class="hearts" id="hearts"></div>
 
-    <button onclick="alert('I choose you. Today and always ❤️')">
-      Click for a surprise 💝
-    </button>
+  <div class="card">
+    <h1>For You ❤️</h1>
+    <div id="message" class="message show">
+      I don’t say everything perfectly… so I made this instead.
+    </div>
+    <button id="nextBtn" class="btn">Click Next 💫</button>
   </div>
+
+  <script>
+    const messages = [
+      "I don’t say everything perfectly… so I made this instead.",
+      "You make my normal days feel lighter and my quiet days feel warmer.",
+      "When your name shows up on my phone, my mood changes.",
+      "I like who I am when I’m around you.",
+      "You’re not just someone I talk to… you’re someone I care about.",
+      "If I’m honest, I hope this makes you smile right now.",
+      "This page is small, but the feeling behind it isn’t.",
+      "I choose you. Today, and all the days I get."
+    ];
+
+    let index = 0;
+    const messageEl = document.getElementById("message");
+    const nextBtn = document.getElementById("nextBtn");
+
+    nextBtn.addEventListener("click", () => {
+      index++;
+      if (index >= messages.length) {
+        index = 0;
+      }
+      messageEl.classList.remove("show");
+      setTimeout(() => {
+        messageEl.textContent = messages[index];
+        messageEl.classList.add("show");
+      }, 200);
+    });
+
+    // floating hearts generator
+    const heartsContainer = document.getElementById("hearts");
+    const heartEmojis = ["❤️", "💖", "💕", "💘", "💝"];
+
+    function spawnHeart() {
+      const span = document.createElement("span");
+      span.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+      span.style.left = Math.random() * 100 + "vw";
+      span.style.animationDuration = (6 + Math.random() * 6) + "s";
+      heartsContainer.appendChild(span);
+      setTimeout(() => span.remove(), 12000);
+    }
+
+    setInterval(spawnHeart, 500);
+  </script>
 </body>
 </html>
