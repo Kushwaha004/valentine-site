@@ -3,74 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will You Be My Valentine?</title>
+    <title>For Someone Special</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg: #fff0f3;
+            --main-pink: #ff4d6d;
+            --dark-pink: #c9184a;
+        }
+
         body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg);
+            font-family: 'Quicksand', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: white;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            background-color: #ffebee;
-            font-family: 'Arial', sans-serif;
-            text-align: center;
+            z-index: 100;
+            transition: opacity 1s ease;
         }
-        h1 { color: #d32f2f; }
-        .buttons { margin-top: 20px; position: relative; width: 300px; height: 100px; }
-        button {
-            padding: 15px 30px;
-            font-size: 18px;
-            cursor: pointer;
-            border: none;
+
+        .progress-bar {
+            width: 200px;
+            height: 10px;
+            background: #eee;
             border-radius: 10px;
-            transition: 0.3s;
+            margin-top: 20px;
+            overflow: hidden;
         }
-        #yesBtn { background-color: #4caf50; color: white; }
-        #noBtn {
-            background-color: #f44336;
+
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--main-pink);
+            transition: width 0.1s;
+        }
+
+        /* Main Card */
+        #card {
+            background: white;
+            padding: 50px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(255, 77, 109, 0.2);
+            text-align: center;
+            max-width: 450px;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 { font-family: 'Dancing Script', cursive; font-size: 3rem; color: var(--dark-pink); margin: 0; }
+        p { color: #555; font-size: 1.1rem; margin: 15px 0; }
+
+        .btn-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            height: 50px;
+        }
+
+        button {
+            padding: 12px 35px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        #yesBtn {
+            background: var(--main-pink);
             color: white;
-            position: absolute;
+            box-shadow: 0 5px 15px rgba(255, 77, 109, 0.4);
         }
-        .hidden { display: none; }
+
+        #noBtn {
+            background: #f8f9fa;
+            color: #888;
+            position: relative;
+        }
+
+        /* Animations */
+        .floating-heart {
+            position: absolute;
+            font-size: 20px;
+            animation: float Up 4s linear forwards;
+            opacity: 0;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.5); opacity: 0; }
+        }
+
+        .hidden { display: none !important; }
     </style>
 </head>
 <body>
 
-    <div id="question-container">
-        <h1>Will you be my Valentine? ❤️</h1>
-        <p>I've been waiting for the right moment to ask...</p>
-        <div class="buttons">
-            <button id="yesBtn" onclick="sayYes()">Yes</button>
-            <button id="noBtn" onmouseover="moveButton()">No</button>
+    <div id="loader">
+        <h2 style="color: #ff4d6d">Analyzing our compatibility...</h2>
+        <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
+    </div>
+
+    <div id="card" class="hidden">
+        <div id="question-ui">
+            <div style="font-size: 60px;">💌</div>
+            <h1>Hey Beautiful,</h1>
+            <p>I was looking at my code and realized there's a missing variable in my life... <b>It's you.</b></p>
+            <p>Will you be my Valentine?</p>
+            
+            <div class="btn-container">
+                <button id="yesBtn" onclick="celebrate()">YES!</button>
+                <button id="noBtn" onmouseover="dodge()">No</button>
+            </div>
+        </div>
+
+        <div id="success-ui" class="hidden">
+            <div style="font-size: 60px;">💖</div>
+            <h1>I Knew It!</h1>
+            <p>You just made me the happiest person in the world.</p>
+            <p style="font-size: 0.9rem; font-style: italic; color: #999;">Check your phone for a real surprise soon... 😉</p>
         </div>
     </div>
 
-    <div id="success-message" class="hidden">
-        <h1>Perfect! 🥰</h1>
-        <p>You made the right choice. I can't wait!</p>
-    </div>
-
     <script>
+        // 1. Loading sequence
+        let fill = 0;
+        const interval = setInterval(() => {
+            fill += 1;
+            document.getElementById('fill').style.width = fill + '%';
+            if(fill >= 100) {
+                clearInterval(interval);
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').classList.add('hidden');
+                    document.getElementById('card').classList.remove('hidden');
+                }, 1000);
+            }
+        }, 30);
+
+        // 2. The "Teasing" No Button
         const noBtn = document.getElementById('noBtn');
-        const phrases = ["Really?", "Are you sure?", "Think again!", "Not yet!", "Still no?", "Click Yes!"];
-        let phraseIndex = 0;
+        const lines = ["Are you sure?", "Think about it...", "Really? 🥺", "Wrong choice!", "Try again!", "Wait!", "I'm sad now..."];
+        let count = 0;
 
-        function moveButton() {
-            // Move the button to a random position
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+        function dodge() {
+            // Take it slow - smooth movement
+            const x = Math.random() * 200 - 100;
+            const y = Math.random() * 200 - 100;
+            noBtn.style.transform = `translate(${x}px, ${y}px)`;
             
-            noBtn.style.left = `${x}px`;
-            noBtn.style.top = `${y}px`;
+            noBtn.innerText = lines[count % lines.length];
+            count++;
 
-            // Change the text of the button
-            noBtn.innerText = phrases[phraseIndex];
-            phraseIndex = (phraseIndex + 1) % phrases.length;
+            // Make Yes button grow slightly as No button is avoided
+            const yesBtn = document.getElementById('yesBtn');
+            let currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize);
+            yesBtn.style.fontSize = (currentSize + 1) + "px";
         }
 
-        function sayYes() {
-            document.getElementById('question-container').classList.add('hidden');
-            document.getElementById('success-message').classList.remove('hidden');
+        // 3. Final Celebration
+        function celebrate() {
+            document.getElementById('question-ui').classList.add('hidden');
+            document.getElementById('success-ui').classList.remove('hidden');
+            
+            // Create a heart rain
+            setInterval(() => {
+                const heart = document.createElement('div');
+                heart.innerHTML = ['❤️', '💖', '💘', '✨', '🌸'][Math.floor(Math.random() * 5)];
+                heart.className = 'floating-heart';
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = '100vh';
+                document.body.appendChild(heart);
+                
+                setTimeout(() => heart.remove(), 4000);
+            }, 100);
         }
     </script>
 </body>
