@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>For My Love 💖</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: radial-gradient(circle at top, #1a001f, #000);
+      color: #fff;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px 30px;
+      max-width: 500px;
+      box-shadow: 0 0 40px rgba(255, 0, 150, 0.3);
+      animation: float 4s ease-in-out infinite;
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      margin-bottom: 15px;
+      color: #ff5fa2;
+    }
+
+    .fancy {
+      font-size: 1.2rem;
+      line-height: 1.7;
+      margin: 10px 0;
+    }
+
+    .heart {
+      font-size: 2rem;
+      animation: pulse 1.5s infinite;
+      margin: 15px 0;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 22px;
+      border: none;
+      border-radius: 30px;
+      font-size: 1rem;
+      background: linear-gradient(45deg, #ff3c7d, #ff85b2);
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255, 60, 125, 0.6);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 60, 125, 0.9);
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Happy Valentine’s Day 💘</h1>
+    <div class="heart">❤️ 💕 💖</div>
+    <p class="fancy">𝒀𝒐𝒖 𝒂𝒓𝒆 𝒎𝒚 𝒇𝒂𝒗𝒐𝒓𝒊𝒕𝒆 𝒉𝒆𝒍𝒍𝒐 𝒂𝒏𝒅 𝒉𝒂𝒓𝒅𝒆𝒔𝒕 𝒈𝒐𝒐𝒅𝒃𝒚𝒆 💌</p>
+    <p class="fancy">𝑴𝒚 𝒉𝒆𝒂𝒓𝒕 𝒔𝒎𝒊𝒍𝒆𝒔 𝒘𝒉𝒆𝒏 𝒚𝒐𝒖’𝒓𝒆 𝒂𝒓𝒐𝒖𝒏𝒅 🥰</p>
+    <p class="fancy">You’re my today, my tomorrow, and my always ♾️</p>
+
+    <button onclick="alert('I choose you. Today and always ❤️')">
+      Click for a surprise 💝
+    </button>
+  </div>
+</body>
+</html>
