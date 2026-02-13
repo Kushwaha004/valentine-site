@@ -3,14 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Forever Variable</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>For My Sun & Stars</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --main-pink: #ff4d6d;
-            --dark-pink: #c9184a;
-            --glass: rgba(255, 255, 255, 0.2);
-            --glass-border: rgba(255, 255, 255, 0.4);
+            --sunflower-yellow: #ffc300;
+            --deep-orange: #ff9500;
+            --glass: rgba(255, 255, 255, 0.12);
         }
 
         body, html {
@@ -18,7 +17,7 @@
             padding: 0;
             height: 100vh;
             width: 100vw;
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Quicksand', sans-serif;
             overflow: hidden;
             display: flex;
             align-items: center;
@@ -26,213 +25,238 @@
             background: #000;
         }
 
-        /* Video Background Overlay */
-        #video-bg {
-            position: fixed;
-            right: 0;
-            bottom: 0;
-            min-width: 100%;
-            min-height: 100%;
-            z-index: -1;
-            filter: brightness(0.6) blur(2px);
-            object-fit: cover;
-        }
-
-        /* Loading Screen */
-        #loader {
+        /* Sunflower Background Layer */
+        .bg-img {
             position: fixed;
             inset: 0;
-            background: #fff0f3;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+            background: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+            z-index: -3;
+            transform: scale(1.1);
+            animation: slowPan 20s infinite alternate ease-in-out;
         }
 
-        .progress-bar {
-            width: 250px;
-            height: 6px;
-            background: #ffe5ec;
-            border-radius: 10px;
-            margin-top: 20px;
-            overflow: hidden;
+        @keyframes slowPan {
+            from { transform: scale(1.1) translateX(-2%); }
+            to { transform: scale(1.1) translateX(2%); }
         }
 
-        .progress-fill {
-            width: 0%;
+        /* Video Overlay */
+        #video-bg {
+            position: fixed;
+            inset: 0;
+            width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, var(--main-pink), var(--dark-pink));
-            transition: width 0.3s;
+            z-index: -2;
+            object-fit: cover;
+            opacity: 0.4;
+            mix-blend-mode: screen;
         }
 
-        /* Glassmorphic Card */
-        #card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            padding: 40px;
-            border-radius: 40px;
-            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        /* Aesthetic Floating Petals */
+        .petal {
+            position: fixed;
+            background: var(--sunflower-yellow);
+            border-radius: 150% 0 150% 0;
+            opacity: 0.7;
+            z-index: -1;
+            pointer-events: none;
+            animation: petalFall linear infinite;
+        }
+
+        @keyframes petalFall {
+            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translate(100px, 110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* Glass Card with Hover Glow */
+        .glass-card {
+            background: var(--glass);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 60px 40px;
+            border-radius: 50px;
             text-align: center;
-            max-width: 400px;
-            width: 90%;
-            z-index: 10;
-            transform: scale(0.9);
+            max-width: 450px;
+            width: 85%;
+            position: relative;
+            box-shadow: 0 40px 100px rgba(0,0,0,0.4);
+            animation: cardEntrance 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+            color: white;
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(50px) scale(0.9); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        h1 { 
+            font-family: 'Dancing Script', cursive; 
+            font-size: 3.8rem; 
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--sunflower-yellow));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textGlow 3s infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from { filter: drop-shadow(0 0 2px rgba(255,255,255,0.2)); }
+            to { filter: drop-shadow(0 0 15px rgba(255, 195, 0, 0.6)); }
+        }
+
+        .message {
+            margin: 25px 0;
+            font-size: 1.2rem;
+            line-height: 1.8;
             opacity: 0;
-            transition: all 0.8s ease-out;
+            animation: fadeIn 1s forwards 0.8s;
         }
 
-        #card.active {
-            transform: scale(1);
-            opacity: 1;
-        }
-
-        h1 { font-family: 'Dancing Script', cursive; font-size: 3.5rem; color: white; margin: 10px 0; text-shadow: 2px 2px 10px rgba(0,0,0,0.2); }
-        p { color: #fff; font-size: 1.1rem; line-height: 1.6; font-weight: 300; }
-
+        /* Aesthetic Buttons */
         .btn-container {
             margin-top: 30px;
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 20px;
-            min-height: 100px;
+            gap: 25px;
+            min-height: 80px;
         }
 
         button {
-            padding: 12px 35px;
-            font-size: 1.1rem;
-            border-radius: 50px;
+            padding: 15px 40px;
+            font-size: 1rem;
+            border-radius: 100px;
             border: none;
             cursor: pointer;
             font-weight: 600;
-            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
         #yesBtn {
-            background: var(--main-pink);
-            color: white;
-            box-shadow: 0 10px 20px rgba(255, 77, 109, 0.3);
+            background: linear-gradient(45deg, var(--sunflower-yellow), var(--deep-orange));
+            color: #000;
+            box-shadow: 0 10px 20px rgba(255, 195, 0, 0.3);
         }
 
         #yesBtn:hover {
-            background: var(--dark-pink);
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(255, 77, 109, 0.5);
+            transform: translateY(-5px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 195, 0, 0.5);
         }
 
         #noBtn {
-            background: rgba(255, 255, 255, 0.8);
-            color: #444;
-        }
-
-        /* Floating Hearts */
-        .heart-particle {
-            position: absolute;
-            pointer-events: none;
-            z-index: 5;
-            animation: moveUp 4s linear forwards;
-        }
-
-        @keyframes moveUp {
-            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .hidden { display: none !important; }
+
+        @keyframes fadeIn { to { opacity: 1; } }
     </style>
 </head>
 <body>
 
+    <div class="bg-img"></div>
+    
     <video autoplay muted loop playsinline id="video-bg">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-pink-and-blue-ink-mixing-in-water-2525-large.mp4" type="video/mp4">
+        <source src="https://assets.mixkit.co/videos/preview/mixkit-bright-sun-shining-through-sunflower-field-14138-large.mp4" type="video/mp4">
     </video>
 
-    <div id="loader">
-        <h2 style="color: #ff4d6d; font-weight: 300;">Initializing Love.exe...</h2>
-        <div class="progress-bar"><div class="progress-fill" id="fill"></div></div>
-    </div>
-
-    <div id="card">
+    <div class="glass-card" id="card">
         <div id="question-ui">
-            <div style="font-size: 50px; filter: drop-shadow(0 0 10px white);">✨</div>
             <h1>Hi Beautiful,</h1>
-            <p>I realized my heart is an <b>infinite loop</b> and you're the only <b>break statement</b> I need.</p>
-            <p>Will you be my Valentine?</p>
+            <p class="message">
+                I looked through my code and found a <b>Logic Error</b>... <br>
+                It said my world doesn't rotate without <b>you</b>. 🌻
+                <br><br>
+                Will you be my Valentine?
+            </p>
             
             <div class="btn-container">
-                <button id="yesBtn" onclick="celebrate()">YES!</button>
+                <button id="yesBtn" onclick="celebrate()">YES, ALWAYS!</button>
                 <button id="noBtn" onmouseover="dodge()">No</button>
             </div>
         </div>
 
         <div id="success-ui" class="hidden">
-            <div style="font-size: 60px;">💍</div>
-            <h1>I Knew It!</h1>
-            <p>Our connection is <b>100% stable</b>.</p>
-            <p style="font-size: 0.8rem; color: #eee; margin-top: 20px;">I love you more than code itself. ❤️</p>
+            <h1 style="font-size: 3rem;">My Universe ✨</h1>
+            <p class="message" style="opacity: 1;">
+                You just made my heart skip a billion frames. <br>
+                I'm the luckiest person alive.
+            </p>
+            <div style="font-size: 40px; animation: pulse 2s infinite;">🌻💛🌻</div>
         </div>
     </div>
 
     <script>
-        // 1. Smooth Loading
-        let fill = 0;
-        const interval = setInterval(() => {
-            fill += 2;
-            document.getElementById('fill').style.width = fill + '%';
-            if(fill >= 100) {
-                clearInterval(interval);
-                const loader = document.getElementById('loader');
-                loader.style.transform = 'translateY(-100%)';
-                setTimeout(() => {
-                    document.getElementById('card').classList.add('active');
-                }, 400);
+        // Create falling petals automatically
+        function createPetals() {
+            const container = document.body;
+            for (let i = 0; i < 25; i++) {
+                let petal = document.createElement('div');
+                petal.className = 'petal';
+                petal.style.left = Math.random() * 100 + 'vw';
+                petal.style.width = Math.random() * 15 + 10 + 'px';
+                petal.style.height = petal.style.width;
+                petal.style.animationDuration = Math.random() * 5 + 5 + 's';
+                petal.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(petal);
             }
-        }, 50);
+        }
+        createPetals();
 
-        // 2. The Dodge Logic
         const noBtn = document.getElementById('noBtn');
         const yesBtn = document.getElementById('yesBtn');
-        const lines = ["Sure?", "Really?", "Try again!", "Nope!", "Wrong button!", "Hehe", "🥺"];
         let count = 0;
 
         function dodge() {
-            const x = Math.random() * (window.innerWidth - 150) - (window.innerWidth / 2 - 75);
-            const y = Math.random() * (window.innerHeight - 150) - (window.innerHeight / 2 - 75);
-            
-            noBtn.style.position = "absolute";
-            noBtn.style.left = "50%";
-            noBtn.style.top = "50%";
+            const x = Math.random() * 300 - 150;
+            const y = Math.random() * 300 - 150;
             noBtn.style.transform = `translate(${x}px, ${y}px)`;
             
-            noBtn.innerText = lines[count % lines.length];
             count++;
-
-            // Yes button gets bigger and more "inviting"
-            let currentSize = parseFloat(window.getComputedStyle(yesBtn).paddingScale || 1);
-            yesBtn.style.transform = `scale(${1 + (count * 0.1)})`;
+            yesBtn.style.transform = `scale(${1 + (count * 0.15)})`;
+            yesBtn.style.boxShadow = `0 0 ${count * 10}px rgba(255, 195, 0, 0.8)`;
         }
 
-        // 3. Celebration
         function celebrate() {
-            document.getElementById('question-ui').classList.add('hidden');
-            document.getElementById('success-ui').classList.remove('hidden');
-            
-            // Trigger heart rain
-            setInterval(() => {
-                const heart = document.createElement('div');
-                heart.innerHTML = ['❤️', '💖', '✨', '💘', '🌸'][Math.floor(Math.random() * 5)];
-                heart.className = 'heart-particle';
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.top = '100vh';
-                heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
-                document.body.appendChild(heart);
-                
-                setTimeout(() => heart.remove(), 4000);
-            }, 150);
+            document.getElementById('question-ui').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('question-ui').classList.add('hidden');
+                document.getElementById('success-ui').classList.remove('hidden');
+                burstSunflowers();
+            }, 500);
+        }
+
+        function burstSunflowers() {
+            for(let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const flower = document.createElement('div');
+                    flower.innerHTML = '🌻';
+                    flower.style.position = 'fixed';
+                    flower.style.left = '50%';
+                    flower.style.top = '50%';
+                    flower.style.fontSize = '30px';
+                    flower.style.transition = 'all 2s cubic-bezier(0.1, 1, 0.1, 1)';
+                    flower.style.zIndex = '100';
+                    document.body.appendChild(flower);
+
+                    const angle = Math.random() * Math.PI * 2;
+                    const dist = Math.random() * 500 + 100;
+                    const tx = Math.cos(angle) * dist;
+                    const ty = Math.sin(angle) * dist;
+
+                    setTimeout(() => {
+                        flower.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random() * 360}deg)`;
+                        flower.style.opacity = '0';
+                    }, 50);
+
+                    setTimeout(() => flower.remove(), 2000);
+                }, i * 20);
+            }
         }
     </script>
 </body>
