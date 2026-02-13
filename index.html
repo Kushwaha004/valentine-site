@@ -1,263 +1,298 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For My Sun & Stars</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --sunflower-yellow: #ffc300;
-            --deep-orange: #ff9500;
-            --glass: rgba(255, 255, 255, 0.12);
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For My Sun & Stars</title>
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100vh;
-            width: 100vw;
-            font-family: 'Quicksand', sans-serif;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #000;
-        }
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@300;500&display=swap" rel="stylesheet">
 
-        /* Sunflower Background Layer */
-        .bg-img {
-            position: fixed;
-            inset: 0;
-            background: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
-            z-index: -3;
-            transform: scale(1.1);
-            animation: slowPan 20s infinite alternate ease-in-out;
-        }
+  <style>
+    :root {
+      --sunflower-yellow: #ffc300;
+      --deep-orange: #ff9500;
+      --glass: rgba(255, 255, 255, 0.12);
+    }
 
-        @keyframes slowPan {
-            from { transform: scale(1.1) translateX(-2%); }
-            to { transform: scale(1.1) translateX(2%); }
-        }
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      overflow: hidden;
+      font-family: 'Quicksand', sans-serif;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        /* Video Overlay */
-        #video-bg {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -2;
-            object-fit: cover;
-            opacity: 0.4;
-            mix-blend-mode: screen;
-        }
+    .glow-bg {
+      position: fixed;
+      inset: -50%;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,195,0,0.25), transparent 40%),
+        radial-gradient(circle at 80% 30%, rgba(255,149,0,0.25), transparent 40%),
+        radial-gradient(circle at 50% 80%, rgba(255,255,255,0.15), transparent 40%);
+      filter: blur(90px);
+      animation: glowMove 20s infinite alternate ease-in-out;
+      z-index: -5;
+    }
 
-        /* Aesthetic Floating Petals */
-        .petal {
-            position: fixed;
-            background: var(--sunflower-yellow);
-            border-radius: 150% 0 150% 0;
-            opacity: 0.7;
-            z-index: -1;
-            pointer-events: none;
-            animation: petalFall linear infinite;
-        }
+    @keyframes glowMove {
+      from { transform: translate(0, 0) scale(1); }
+      to { transform: translate(5%, -5%) scale(1.1); }
+    }
 
-        @keyframes petalFall {
-            0% { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.8; }
-            100% { transform: translate(100px, 110vh) rotate(720deg); opacity: 0; }
-        }
+    .bg-img {
+      position: fixed;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&w=2000&q=80') center/cover no-repeat;
+      z-index: -4;
+      transform: scale(1.1);
+      animation: slowPan 20s infinite alternate ease-in-out;
+    }
 
-        /* Glass Card with Hover Glow */
-        .glass-card {
-            background: var(--glass);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 60px 40px;
-            border-radius: 50px;
-            text-align: center;
-            max-width: 450px;
-            width: 85%;
-            position: relative;
-            box-shadow: 0 40px 100px rgba(0,0,0,0.4);
-            animation: cardEntrance 1.5s cubic-bezier(0.16, 1, 0.3, 1);
-            color: white;
-        }
+    @keyframes slowPan {
+      from { transform: scale(1.1) translateX(-2%); }
+      to { transform: scale(1.1) translateX(2%); }
+    }
 
-        @keyframes cardEntrance {
-            from { opacity: 0; transform: translateY(50px) scale(0.9); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
-        }
+    #video-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -3;
+      object-fit: cover;
+      opacity: 0.35;
+      mix-blend-mode: screen;
+    }
 
-        h1 { 
-            font-family: 'Dancing Script', cursive; 
-            font-size: 3.8rem; 
-            margin: 0;
-            background: linear-gradient(to right, #fff, var(--sunflower-yellow));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: textGlow 3s infinite alternate;
-        }
+    .glass-card {
+      position: relative;
+      background: var(--glass);
+      backdrop-filter: blur(25px);
+      border-radius: 50px;
+      padding: 60px 40px;
+      max-width: 450px;
+      width: 85%;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 40px 100px rgba(0,0,0,0.5);
+      animation: cardEntrance 1.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transform-style: preserve-3d;
+    }
 
-        @keyframes textGlow {
-            from { filter: drop-shadow(0 0 2px rgba(255,255,255,0.2)); }
-            to { filter: drop-shadow(0 0 15px rgba(255, 195, 0, 0.6)); }
-        }
+    .glass-card::before {
+      content: "";
+      position: absolute;
+      inset: -2px;
+      border-radius: 52px;
+      background: linear-gradient(120deg, #ffc300, #ff9500, #ffffff, #ffc300);
+      filter: blur(12px);
+      opacity: 0.7;
+      z-index: -1;
+      animation: borderPulse 4s linear infinite;
+    }
 
-        .message {
-            margin: 25px 0;
-            font-size: 1.2rem;
-            line-height: 1.8;
-            opacity: 0;
-            animation: fadeIn 1s forwards 0.8s;
-        }
+    @keyframes borderPulse {
+      from { filter: blur(10px); opacity: 0.5; }
+      to { filter: blur(18px); opacity: 0.9; }
+    }
 
-        /* Aesthetic Buttons */
-        .btn-container {
-            margin-top: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            min-height: 80px;
-        }
+    @keyframes cardEntrance {
+      from { opacity: 0; transform: translateY(40px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
 
-        button {
-            padding: 15px 40px;
-            font-size: 1rem;
-            border-radius: 100px;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            letter-spacing: 1px;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-        }
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      margin: 0;
+      background: linear-gradient(to right, #fff, var(--sunflower-yellow));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      filter: drop-shadow(0 0 10px rgba(255,195,0,0.6));
+    }
 
-        #yesBtn {
-            background: linear-gradient(45deg, var(--sunflower-yellow), var(--deep-orange));
-            color: #000;
-            box-shadow: 0 10px 20px rgba(255, 195, 0, 0.3);
-        }
+    .message {
+      margin: 25px 0;
+      font-size: 1.2rem;
+      line-height: 1.7;
+    }
 
-        #yesBtn:hover {
-            transform: translateY(-5px) scale(1.05);
-            box-shadow: 0 15px 30px rgba(255, 195, 0, 0.5);
-        }
+    .btn-container {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-top: 30px;
+    }
 
-        #noBtn {
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
+    button {
+      padding: 15px 40px;
+      border-radius: 100px;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.4s ease;
+    }
 
-        .hidden { display: none !important; }
+    #yesBtn {
+      background: linear-gradient(45deg, var(--sunflower-yellow), var(--deep-orange));
+      box-shadow: 0 10px 25px rgba(255,195,0,0.5);
+    }
 
-        @keyframes fadeIn { to { opacity: 1; } }
-    </style>
+    #yesBtn:hover {
+      transform: translateY(-4px) scale(1.05);
+    }
+
+    #noBtn {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .hidden { display: none; }
+
+    .petal {
+      position: fixed;
+      background: var(--sunflower-yellow);
+      border-radius: 150% 0 150% 0;
+      opacity: 0.7;
+      animation: petalFall linear infinite;
+      pointer-events: none;
+      z-index: -2;
+    }
+
+    @keyframes petalFall {
+      from { transform: translate(0, -10vh) rotate(0deg); opacity: 0; }
+      to { transform: translate(100px, 110vh) rotate(720deg); opacity: 0; }
+    }
+
+    .glow-heart {
+      position: fixed;
+      bottom: -30px;
+      font-size: 24px;
+      filter: drop-shadow(0 0 12px rgba(255,195,0,0.8));
+      animation: floatHeart 7s linear forwards;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    @keyframes floatHeart {
+      from { transform: translateY(0) scale(0.6); opacity: 0; }
+      to { transform: translateY(-120vh) scale(1.4); opacity: 0; }
+    }
+  </style>
 </head>
 <body>
 
-    <div class="bg-img"></div>
-    
-    <video autoplay muted loop playsinline id="video-bg">
-        <source src="https://assets.mixkit.co/videos/preview/mixkit-bright-sun-shining-through-sunflower-field-14138-large.mp4" type="video/mp4">
-    </video>
+<div class="glow-bg"></div>
+<div class="bg-img"></div>
 
-    <div class="glass-card" id="card">
-        <div id="question-ui">
-            <h1>Hi Beautiful,</h1>
-            <p class="message">
-                I looked through my code and found a <b>Logic Error</b>... <br>
-                It said my world doesn't rotate without <b>you</b>. 🌻
-                <br><br>
-                Will you be my Valentine?
-            </p>
-            
-            <div class="btn-container">
-                <button id="yesBtn" onclick="celebrate()">YES, ALWAYS!</button>
-                <button id="noBtn" onmouseover="dodge()">No</button>
-            </div>
-        </div>
+<video autoplay muted loop playsinline id="video-bg">
+  <source src="https://assets.mixkit.co/videos/preview/mixkit-bright-sun-shining-through-sunflower-field-14138-large.mp4" type="video/mp4">
+</video>
 
-        <div id="success-ui" class="hidden">
-            <h1 style="font-size: 3rem;">My Universe ✨</h1>
-            <p class="message" style="opacity: 1;">
-                You just made my heart skip a billion frames. <br>
-                I'm the luckiest person alive.
-            </p>
-            <div style="font-size: 40px; animation: pulse 2s infinite;">🌻💛🌻</div>
-        </div>
+<audio id="bg-music" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_8d3d8c3b3b.mp3?filename=romantic-ambient-piano-112191.mp3" type="audio/mpeg">
+</audio>
+
+<div class="glass-card" id="card">
+  <div id="question-ui">
+    <h1>Hi Beautiful</h1>
+    <p class="message">
+      I checked my life’s source code and found one missing variable.  
+      Turns out, it was <b>you</b>.  
+      <br><br>
+      Will you be my Valentine?
+    </p>
+    <div class="btn-container">
+      <button id="yesBtn" onclick="celebrate(); playMusic(); sparkleBurst();">YES 💛</button>
+      <button id="noBtn" onmouseover="dodge()">No</button>
     </div>
+  </div>
 
-    <script>
-        // Create falling petals automatically
-        function createPetals() {
-            const container = document.body;
-            for (let i = 0; i < 25; i++) {
-                let petal = document.createElement('div');
-                petal.className = 'petal';
-                petal.style.left = Math.random() * 100 + 'vw';
-                petal.style.width = Math.random() * 15 + 10 + 'px';
-                petal.style.height = petal.style.width;
-                petal.style.animationDuration = Math.random() * 5 + 5 + 's';
-                petal.style.animationDelay = Math.random() * 5 + 's';
-                container.appendChild(petal);
-            }
-        }
-        createPetals();
+  <div id="success-ui" class="hidden">
+    <h1>My Forever ✨</h1>
+    <p class="message">
+      In every lifetime, in every version of me,  
+      I’d still choose you.  
+      You are my favorite forever. 💛
+    </p>
+  </div>
+</div>
 
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        let count = 0;
+<script>
+  function createPetals() {
+    for (let i = 0; i < 25; i++) {
+      const p = document.createElement('div');
+      p.className = 'petal';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.width = p.style.height = Math.random() * 15 + 10 + 'px';
+      p.style.animationDuration = Math.random() * 5 + 6 + 's';
+      p.style.animationDelay = Math.random() * 5 + 's';
+      document.body.appendChild(p);
+    }
+  }
+  createPetals();
 
-        function dodge() {
-            const x = Math.random() * 300 - 150;
-            const y = Math.random() * 300 - 150;
-            noBtn.style.transform = `translate(${x}px, ${y}px)`;
-            
-            count++;
-            yesBtn.style.transform = `scale(${1 + (count * 0.15)})`;
-            yesBtn.style.boxShadow = `0 0 ${count * 10}px rgba(255, 195, 0, 0.8)`;
-        }
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  let count = 0;
 
-        function celebrate() {
-            document.getElementById('question-ui').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('question-ui').classList.add('hidden');
-                document.getElementById('success-ui').classList.remove('hidden');
-                burstSunflowers();
-            }, 500);
-        }
+  function dodge() {
+    const x = Math.random() * 300 - 150;
+    const y = Math.random() * 300 - 150;
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    count++;
+    yesBtn.style.transform = `scale(${1 + count * 0.15})`;
+  }
 
-        function burstSunflowers() {
-            for(let i = 0; i < 100; i++) {
-                setTimeout(() => {
-                    const flower = document.createElement('div');
-                    flower.innerHTML = '🌻';
-                    flower.style.position = 'fixed';
-                    flower.style.left = '50%';
-                    flower.style.top = '50%';
-                    flower.style.fontSize = '30px';
-                    flower.style.transition = 'all 2s cubic-bezier(0.1, 1, 0.1, 1)';
-                    flower.style.zIndex = '100';
-                    document.body.appendChild(flower);
+  function celebrate() {
+    document.getElementById("question-ui").classList.add("hidden");
+    document.getElementById("success-ui").classList.remove("hidden");
+  }
 
-                    const angle = Math.random() * Math.PI * 2;
-                    const dist = Math.random() * 500 + 100;
-                    const tx = Math.cos(angle) * dist;
-                    const ty = Math.sin(angle) * dist;
+  function sparkleBurst() {
+    for (let i = 0; i < 80; i++) {
+      const s = document.createElement("div");
+      s.innerHTML = "✨";
+      s.style.position = "fixed";
+      s.style.left = "50%";
+      s.style.top = "50%";
+      s.style.transition = "all 1.8s ease-out";
+      s.style.zIndex = 999;
+      document.body.appendChild(s);
+      const a = Math.random() * Math.PI * 2;
+      const d = Math.random() * 400 + 100;
+      s.style.transform = `translate(${Math.cos(a)*d}px, ${Math.sin(a)*d}px)`;
+      setTimeout(() => s.remove(), 2000);
+    }
+  }
 
-                    setTimeout(() => {
-                        flower.style.transform = `translate(${tx}px, ${ty}px) rotate(${Math.random() * 360}deg)`;
-                        flower.style.opacity = '0';
-                    }, 50);
+  function playMusic() {
+    const m = document.getElementById("bg-music");
+    m.volume = 0.4;
+    m.play();
+  }
 
-                    setTimeout(() => flower.remove(), 2000);
-                }, i * 20);
-            }
-        }
-    </script>
+  setInterval(() => {
+    const h = document.createElement("div");
+    h.className = "glow-heart";
+    h.innerHTML = Math.random() > 0.5 ? "💛" : "✨";
+    h.style.left = Math.random() * 100 + "vw";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+  }, 500);
+
+  const card = document.getElementById("card");
+  document.addEventListener("mousemove", e => {
+    const x = (window.innerWidth / 2 - e.clientX) / 30;
+    const y = (window.innerHeight / 2 - e.clientY) / 30;
+    card.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
+  });
+</script>
+
 </body>
 </html>
